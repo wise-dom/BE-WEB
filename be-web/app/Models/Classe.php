@@ -9,5 +9,9 @@ class Classe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['libelle', 'effectif'];
+    protected $fillable = ['libelle', 'effectif','filiere_id'];
+
+    public function filiere(){
+        return $this->belongsTo(Filiere::class);
+    }
 }

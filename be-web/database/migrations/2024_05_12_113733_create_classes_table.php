@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('libelle');
             $table->integer('effectif');
             $table->timestamps();
+            $table->unsignedInteger('filiere_id');
         });
     }
 
