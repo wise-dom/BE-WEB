@@ -18,6 +18,7 @@ class FiliereResource extends JsonResource
         return [
             'id' => $this->id,
             'libelle' => $this->libelle,
+            'classes' => $this->classes,
         ];
     }
 }

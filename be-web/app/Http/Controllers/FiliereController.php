@@ -15,8 +15,11 @@ class FiliereController extends Controller
      */
     public function index()
     {
-        return Filiere::all();
+        // return Filiere::collection(Filiere::with('classes'));
+        // return Filiere::all();
+        return FiliereResource::collection(Filiere::with('classes')->get());
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -26,14 +29,12 @@ class FiliereController extends Controller
      */
     public function store(Request $request)
     {
-        $libelle = $request->input('libelle');
-
-        $filiere = Filiere::create([
-            'libelle' => $libelle,
+        $validated = $request->validate([
+            'libelle' => 'required|string|max:255',
         ]);
-        return response()->json([
-            'data' => new FiliereResource($filiere)
-        ], 201);
+
+
+        return Filiere::create($validated);
     }
 
     /**
@@ -44,6 +45,7 @@ class FiliereController extends Controller
      */
     public function show(Filiere $filiere)
     {
+        // return $filiere;
         return new FiliereResource($filiere);
     }
 
@@ -56,14 +58,13 @@ class FiliereController extends Controller
      */
     public function update(Request $request, Filiere $filiere)
     {
-        $libelle = $request->input('libelle');
-
-        $filiere->update([
-            'libelle' => $libelle,
+        $validated = $request->validate([
+            'libelle' => 'required|string|max:255',
         ]);
-        return response()->json([
-            'data' => new FiliereResource($filiere)
-        ], 200);
+
+        $filiere->update($validated);
+
+        return $filiere;
     }
 
     /**
@@ -75,6 +76,6 @@ class FiliereController extends Controller
     public function destroy(Filiere $filiere)
     {
         $filiere->delete();
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }
